@@ -5,6 +5,11 @@ void get_date(int& month, int& day, int& year);
 void compute_mjd(int month, int day, int year, int& mjd);
 void compute_dow(int month, int day, int year, int& dow);
 void compute_days(int mjd1, int mjd2, int& days_between);
+void display_date(int month, int day, int year);
+void display_results(int today_month, int today_day, int today_year,
+	int today_mjd, int birthday_month, int birthday_day,
+	int birthday_year, int birthday_mjd,
+	int birthday_dow, int days_between);
 
 int main() {
 	int today_month,
@@ -23,7 +28,9 @@ int main() {
 	get_date(birthday_month, birthday_day, birthday_year);
 	compute_mjd(today_month, today_day, today_year, today_mjd);
 	compute_mjd(birthday_month, birthday_day, birthday_year, birthday_mjd);
-
+	compute_dow(birthday_month, birthday_day, birthday_year, birthday_dow);
+	compute_days(today_mjd,birthday_mjd,days_between);
+	display_results(today_month, today_day, today_year, today_mjd, birthday_month, birthday_day, birthday_year, birthday_mjd, birthday_dow, days_between);
 
 
 	/*
@@ -52,6 +59,7 @@ void get_date(int &month, int &day,int &year) {
 	std::cin >> day;
 	std::cout << "Enter a year using four digits " << std::setw(11) << " : ";
 	std::cin >> year;
+	std::cout << std::endl;
 	
 }
 
@@ -80,7 +88,10 @@ void compute_dow(int month, int day, int year, int &dow) {
 // This module computes the number of days between two given MJDs
 //
 void compute_days(int mjd1, int mjd2, int& days_between) {
-	days_between = mjd1 - mjd1;
+	std::cout << "mjd 1: "<<mjd1 << std::endl;
+	std::cout << "mjd 2: " << mjd2 << std::endl;
+
+	days_between = mjd2 - mjd1;
 }
 
 //
@@ -91,7 +102,15 @@ void display_date(int month, int day, int year) {
 }
 
 void display_results(int today_month, int today_day, int today_year, 
-					int today_mjd, int birthday_month, int birthday_day, int birthday_year,
-					int birthday_mjd, int birthday_dow,int days_between) {
-
+					int today_mjd, int birthday_month, int birthday_day,
+					int birthday_year,int birthday_mjd,
+					int birthday_dow,int days_between) {
+	std::cout << "The MJD for ";
+	display_date(today_month, today_day, today_year);
+	std::cout << "is "<< today_mjd<<std::endl;
+	std::cout << "The MJD for your next birthday on ";
+	display_date(birthday_month, birthday_day, birthday_year);
+	std::cout << " is "<< birthday_mjd <<std::endl;
+	std::cout << "The DOW on your next birthday will be " << birthday_dow << " (0=Sun, 1=Mon, etc.)" << std::endl;
+	std::cout << "Only " << days_between << " day(s) until your next birthday!";
 }
